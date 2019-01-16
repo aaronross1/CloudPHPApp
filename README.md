@@ -1,1 +1,1 @@
-# CST-256-Mileston
+# CST-256-Milestone
