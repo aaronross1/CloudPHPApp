@@ -12,7 +12,7 @@ class HomeController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
         
-        $data = ['username' => $firstName];
+        $data = ['username' => $username];
         return view('loginSuccess')->with($data);
     }
     
@@ -28,7 +28,7 @@ class HomeController extends Controller
         $state = $request->input('state');
         $zip = $request->input('zip');
         
-        $data = ['username' => $firstName];
+        $data = ['username' => $username];
         return view('registerSuccess')->with($data);
     }
     
