@@ -19,4 +19,10 @@ Route::get('/', 'HomeController@home');
 Route::get('/login', function () {
     return view('login');
 });
-Route::post('/loginuser', 'HomeController@index');
+Route::post('/loginuser', 'HomeController@login');
+
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::post('/registeruser', 'HomeController@register');
