@@ -12,6 +12,6 @@ echo "Register successful as " . $username;
 ?>
 <br>
 <br>
-<a href="/login">Go Home</a>
+<a href="/login">Go Login</a>
 </body>
 </html>
