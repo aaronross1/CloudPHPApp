@@ -6,17 +6,17 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>org.eclipse.php.composer.core.builder.buildPathManagementBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.wst.validation.validationbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.dltk.core.scriptbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.php.composer.core.builder.buildPathManagementBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -30,7 +30,7 @@
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/New_Builder (1).launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/New_Builder (2).launch</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
