@@ -57,16 +57,17 @@ class UserDAO
      * Creates a function that will add a user to the database
      */
     public function create(User $user)
-    {
-        $query = "INSERT INTO laravel.Users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(" .
-        $user->getUsername().",".$user->getFName().",".$user->getLName().",".$user->getEmail().",".$user->getPhone().",".
-        $user->getPassword().",".$user->getStreet().",".$user->getState().",".$user->getZip().")";
+    {        
+        $query = 'INSERT INTO laravel.Users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(USER_NAME=?,
+        FNAME=?,LNAME=?,EMAIL=?,PHONE=?,PASSWORD=?,STREET=?,STATE=?,ZIP=?)';
         
         try
         {
-            $result=$this->dbConnect()->query($query);
+            $stmt=$this->dbConnect()->prepare($query);
+            $stmt->execute([$user->getUsername(),$user->getFName(),$user->getLName(),$user->getEmail(),$user->getPhone() .
+            $user->getPassword(),$user->getStreet(),$user->getState(),$user->getZip()]);
             $this->dbClose();
-            return $result;
+            return $stmt->rowCount();
         }
         catch (Exception $e)
         {
