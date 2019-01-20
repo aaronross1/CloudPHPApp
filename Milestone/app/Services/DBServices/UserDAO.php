@@ -93,6 +93,8 @@ class UserDAO
         return $result;
     }
     
+    
+    
     public function delete($user)
     {
         // This will contain SQL to delete a given user

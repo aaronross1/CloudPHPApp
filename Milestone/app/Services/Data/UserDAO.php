@@ -150,6 +150,25 @@ class UserDAO
             return 1;
         }        
     }
+    
+    public function login($username, $password)
+    {
+        $query = 'SELECT * FROM laravel.Users WHERE USER_NAME =? && PASSWORD =?';
+        
+        $stmt = $this->dbConnect()->prepare($query);
+        $stmt->execute([$username], [$password]);
+        $user = new User($stmt->fetch());
+        $this->dbClose();
+        
+        if(is_null($user))
+        {
+            return 2;
+        }
+        else
+        {
+            return $user;
+        }
+    }
 }
 
 ?>
