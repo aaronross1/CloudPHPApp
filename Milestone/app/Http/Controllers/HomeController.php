@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Business\LoginService;
+use App\Services\Business\RegisterService;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -12,8 +15,26 @@ class HomeController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
         
-        $data = ['username' => $username];
-        return view('loginSuccess')->with($data);
+        // Call the business service to verify the credentials
+        $user = new User();
+        $service = new LoginService();
+        $auth = $service->authorizeUser($username, $password);
+        if($auth == 2)
+        {
+            // Render the new view with binded data
+            $data = ['fName' => $user->getFName(), 'lName' => $user->getLName()];
+            return view('loginSuccess')->with($data);
+        }
+        elseif ($auth == 1)
+        {
+            // Render the login view again with error message
+            echo 'YOUR LOGIN CREDENTIALS WERE INCORRECT, PLEASE TRY AGAIN';           
+        }
+        else 
+        {
+            // Render the login view again with error message
+            echo 'Oops! Something went wrong, please try again later.';
+        }
     }
     
     public function register(Request $request)
@@ -26,10 +47,39 @@ class HomeController extends Controller
         $phone = $request->input('phone');
         $street = $request->input('street');
         $state = $request->input('state');
-        $zip = $request->input('zip');
+        $zip = $request->input('zip');   
         
-        $data = ['username' => $username];
-        return view('registerSuccess')->with($data);
+        // set all attributes to a new User object
+        $user = new User();
+        $user->setUsername($username);
+        $user->setPassword($password);
+        $user->setFName($fName);
+        $user->setLName($lName);
+        $user->setEmail($email);
+        $user->setPhone($phone);
+        $user->setStreet($street);
+        $user->setState($state);
+        $user->setZip($zip);
+        
+        // Call the business service to check if username already exists and if not, then add user to database        
+        $service = new RegisterService();
+        $nUser = $service->registerUser($user);
+        if($nUser == 1)
+        {
+            // Render the new view with binded data
+            $data = ['username' => $username];
+            return view('registerSuccess')->with($data);
+        }
+        elseif ($nUser == 2)
+        {
+            // Display an error message
+            echo 'The Username you entered already exists. Please try again.';
+        }
+        else 
+        {
+            // Display an error message
+            echo 'Oops! Something went wrong, please try again later.';
+        }
     }
     
     public function home()

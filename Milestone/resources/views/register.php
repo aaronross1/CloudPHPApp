@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form action = "loginuser" method="POST">
+<form action = "registeruser" method="POST">
 	<input type="hidden" name="_token" value = "<?php echo csrf_token() ?>"/>
 	<h2> Hey bud! Login Below!</h2>
 	<br>
