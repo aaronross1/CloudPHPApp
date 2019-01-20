@@ -2,7 +2,7 @@
 namespace App\Services\Data;
 
 use Exception;
-use PDO;
+use \PDO;
 use PDOException;
 use App\Models\User;
 
@@ -64,7 +64,7 @@ class UserDAO
         try
         {
             $stmt=$this->dbConnect()->prepare($query);
-            $stmt->execute([$user->getUsername(),$user->getFName(),$user->getLName(),$user->getEmail(),$user->getPhone() .
+            $stmt->execute([$user->getUsername(),$user->getFName(),$user->getLName(),$user->getEmail(),$user->getPhone(),
             $user->getPassword(),$user->getStreet(),$user->getState(),$user->getZip()]);
             $this->dbClose();
             return $stmt->rowCount();
@@ -72,7 +72,7 @@ class UserDAO
         catch (Exception $e)
         {
             // TODO: Route to global exception
-            echo 'Message: Oops, something went wrong';
+            echo $e->getMessage();
         }
     }
     

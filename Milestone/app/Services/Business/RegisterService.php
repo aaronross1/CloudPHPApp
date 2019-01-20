@@ -14,7 +14,8 @@ class RegisterService
         if($data->find($user->getUsername()) == 1)
         {        
             // Call the data function to create the new user and return 1
-            echo 'The number of rows in the database is now: ' .$data->create($user);
+            // echo 'The number of rows in the database is now: ' .
+            $data->create($user);
             return 1;
         }
         elseif ($data->find($user->getUsername()) == 2)
