@@ -59,7 +59,7 @@ class UserDAO
     public function create(User $user)
     {        
         // Test the user info with an echo statement
-        echo '<p>User first name in the data service is '.$user->getFName().'</p>';
+//         echo '<p>User first name in the data service is '.$user->getFName().'</p>';
         
         $query = 'INSERT INTO laravel.users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(:username,
         :fname,:lname,:email,:phone,:password,:street,:state,:zip)';
@@ -169,12 +169,12 @@ class UserDAO
             ++$i;
         }
         
-        echo '<p>username name from the data service is '.$username.'</p>';
-        echo '<p>first name from the data service is '.$user->getFName().'</p>';
+//         echo '<p>username name from the data service is '.$username.'</p>';
+//         echo '<p>first name from the data service is '.$user->getFName().'</p>';
         
-        if(is_null($user))
-        {
-            return 2;
+        if($i == 0)
+        {            
+            return false;
         }
         else 
         {

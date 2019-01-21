@@ -14,7 +14,7 @@ class LoginService
         // Check if the users exists
         $data = new UserDAO();
         $user = $data->find($username);
-        echo '<p>first name from the business service is '.$user->getFName().'</p>';
+//         echo '<p>first name from the business service is '.$user->getFName().'</p>';
         
         if(is_null($user))
         {
