@@ -12,6 +12,6 @@ echo "Login successful as " . $fName ." ".$lName;
 ?>
 <br>
 <br>
-<a href="{{ route('home') }}">Go Home</a>
+<a href="{{ url('/home') }}">Go Home</a>
 </body>
 </html>
