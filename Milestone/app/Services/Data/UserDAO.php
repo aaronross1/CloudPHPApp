@@ -152,9 +152,22 @@ class UserDAO
         
         $stmt = $this->dbConnect()->prepare($query);
         $stmt->execute([$username]);
-        $user = $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
-//         $user = ($stmt->fetch());
-        $this->dbClose();
+        $user = new User();
+        $i = 0;
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+        {            
+            $user->setUserID($row['USER_ID']);
+            $user->setUsername($row['USER_NAME']);
+            $user->setFName($row['FNAME']);
+            $user->setLName($row['LNAME']);
+            $user->setEmail($row['EMAIL']);
+            $user->setPhone($row['PHONE']);
+            $user->setPassword($row['PASSWORD']);
+            $user->setStreet($row['STREET']);
+            $user->setState($row['STATE']);
+            $user->setZip($row['ZIP']);
+            ++$i;
+        }
         
         echo '<p>username name from the data service is '.$username.'</p>';
         echo '<p>first name from the data service is '.$user->getFName().'</p>';
