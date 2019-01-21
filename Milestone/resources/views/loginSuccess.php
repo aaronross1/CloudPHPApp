@@ -8,7 +8,7 @@
 <h2> Hello!</h2>
 
 <?php
-echo "Login successful as " . $fName ." ".$lName;
+echo "Login successful as " . $username;
 ?>
 <br>
 <br>

@@ -14,6 +14,20 @@ class User
     private $username;
     private $password;
     
+    public function __construct()
+    {
+        $this->userID = null;
+        $this->fName = null;
+        $this->lName = null;
+        $this->email = null;
+        $this->phone = null;
+        $this->street = null;
+        $this->state = null;
+        $this->zip = null;
+        $this->username = null;
+        $this->password = null;        
+    }
+    
     //getters and setters functions
     public function getUserID()
     {

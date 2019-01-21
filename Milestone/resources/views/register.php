@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<td>Username </td>
-			<td><input type="text" name="userName"/></td>
+			<td><input type="text" name="username"/></td>
 		</tr>
 		<tr>
 			<td>Email </td>

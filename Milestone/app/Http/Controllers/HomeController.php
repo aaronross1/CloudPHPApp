@@ -16,13 +16,12 @@ class HomeController extends Controller
         $password = $request->input('password');
         
         // Call the business service to verify the credentials
-        $user = new User();
         $service = new LoginService();
         $auth = $service->authorizeUser($username, $password);
         if($auth == 2)
         {
             // Render the new view with binded data
-            $data = ['fName' => $user->getFName(), 'lName' => $user->getLName()];
+            $data = ['username' => $username];
             return view('loginSuccess')->with($data);
         }
         elseif ($auth == 1)
@@ -67,7 +66,7 @@ class HomeController extends Controller
         if($nUser == 1)
         {
             // Render the new view with binded data
-            $data = ['username' => $username];
+            $data = ['username' => $user->getUsername()];
             return view('registerSuccess')->with($data);
         }
         elseif ($nUser == 2)
