@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 <meta charset="UTF-8">
 <title>Register successful</title>
@@ -12,6 +12,6 @@ echo "Register successful as " . $username;
 ?>
 <br>
 <br>
-<a href="{{ url('/login') }}">Go Login</a>
+<a href="{{ url('/login') }}">Login</a>
 </body>
 </html>

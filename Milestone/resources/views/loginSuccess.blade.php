@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 <meta charset="UTF-8">
 <title>Login Success</title>
@@ -12,6 +12,6 @@ echo "Login successful as " . $username;
 ?>
 <br>
 <br>
-<a href="{{ url('/home') }}">Go Home</a>
+<a href="{{ url('/') }}">Go Home</a>
 </body>
 </html>

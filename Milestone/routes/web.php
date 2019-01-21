@@ -16,9 +16,8 @@
 */
 Route::get('/', 'HomeController@home');
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login', 'HomeController@getLogin');
+
 Route::post('/loginuser', 'HomeController@login');
 
 Route::get('/register', function () {
