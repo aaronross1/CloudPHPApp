@@ -8,7 +8,10 @@ class RegisterService
 {
     public function registerUser(User $user)
     {        
-        $data = new UserDAO();  
+        // Test the user info with an echo statement
+        echo '<p>User first name in the business service is '.$user->getFName().'</p>';
+        
+        $data = new UserDAO();
         
         // Check if the username already exists
         if($data->find($user->getUsername()) == 1)

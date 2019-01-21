@@ -58,15 +58,29 @@ class UserDAO
      */
     public function create(User $user)
     {        
-        $query = 'INSERT INTO laravel.Users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(USER_NAME=?,
-        FNAME=?,LNAME=?,EMAIL=?,PHONE=?,PASSWORD=?,STREET=?,STATE=?,ZIP=?)';
+        // Test the user info with an echo statement
+        echo '<p>User first name in the data service is '.$user->getFName().'</p>';
+        
+        $query = 'INSERT INTO laravel.users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(:username,
+        :fname,:lname,:email,:phone,:password,:street,:state,:zip)';
         
         try
         {
             $stmt=$this->dbConnect()->prepare($query);
-            $stmt->execute([$user->getUsername(),$user->getFName(),$user->getLName(),$user->getEmail(),$user->getPhone(),
-            $user->getPassword(),$user->getStreet(),$user->getState(),$user->getZip()]);
+            
+            $stmt->execute([
+                'username'  => $user->getUsername(),
+                'fname'     => $user->getFName(),
+                'lname'     => $user->getLName(),
+                'email'     => $user->getEmail(),
+                'phone'     => $user->getPhone(),
+                'password'  => $user->getPassword(),
+                'street'    => $user->getStreet(),
+                'state'     => $user->getState(),
+                'zip'       => $user->getZip()]);
+            
             $this->dbClose();
+            
             return $stmt->rowCount();
         }
         catch (Exception $e)
@@ -134,12 +148,16 @@ class UserDAO
     
     public function find($username)
     {
-        $query = 'SELECT * FROM laravel.Users WHERE USER_NAME =?';
+        $query = 'SELECT * FROM laravel.users WHERE USER_NAME=?';
         
         $stmt = $this->dbConnect()->prepare($query);
         $stmt->execute([$username]);
-        $user = new User($stmt->fetch());
+        $user = $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+//         $user = ($stmt->fetch());
         $this->dbClose();
+        
+        echo '<p>username name from the data service is '.$username.'</p>';
+        echo '<p>first name from the data service is '.$user->getFName().'</p>';
         
         if(is_null($user))
         {
@@ -147,27 +165,8 @@ class UserDAO
         }
         else 
         {
-            return 1;
-        }        
-    }
-    
-    public function login($username, $password)
-    {
-        $query = 'SELECT * FROM laravel.Users WHERE USER_NAME =? && PASSWORD =?';
-        
-        $stmt = $this->dbConnect()->prepare($query);
-        $stmt->execute([$username], [$password]);
-        $user = new User($stmt->fetch());
-        $this->dbClose();
-        
-        if(is_null($user))
-        {
-            return 2;
-        }
-        else
-        {
             return $user;
-        }
+        }        
     }
 }
 

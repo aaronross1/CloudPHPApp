@@ -14,26 +14,28 @@ class LoginService
         // Check if the users exists
         $data = new UserDAO();
         $user = $data->find($username);
+        echo '<p>first name from the business service is '.$user->getFName().'</p>';
         
         if(is_null($user))
         {
             // return 1 if username doesn't exist
             return 1;
         }
-        elseif ($user->getPassword() != $password)
+        elseif($user->getPassword() !== $password)
         {
             // return 1 if password is incorrect
             return 1;
         }
-        elseif ($user->getPassword() = $password)
+        elseif($user->getPassword() === $password)
         {
             // return 2 if password is correct
             return 2;
         }
-        else 
+        else
         {
             // return 3 if there was something that went wrong
             return 3;
         }
+
     }
 }
