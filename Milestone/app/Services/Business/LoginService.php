@@ -21,12 +21,12 @@ class LoginService
             // return 1 if username doesn't exist
             return 1;
         }
-        elseif($user->getPassword() !== $password)
+        elseif($user->getCredentials()->getPassword() !== $password)
         {
             // return 1 if password is incorrect
             return 1;
         }
-        elseif($user->getPassword() === $password)
+        elseif($user->getCredentials()->getPassword() === $password)
         {
             // return 2 if password is correct
             return 2;

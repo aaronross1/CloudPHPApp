@@ -69,12 +69,12 @@ class UserDAO
             $stmt=$this->dbConnect()->prepare($query);
             
             $stmt->execute([
-                'username'  => $user->getUsername(),
+                'username'  => $user->getCredentials()->getUsername(),
                 'fname'     => $user->getFName(),
                 'lname'     => $user->getLName(),
                 'email'     => $user->getEmail(),
                 'phone'     => $user->getPhone(),
-                'password'  => $user->getPassword(),
+                'password'  => $user->getCredentials()->getPassword(),
                 'street'    => $user->getStreet(),
                 'state'     => $user->getState(),
                 'zip'       => $user->getZip()]);
@@ -121,12 +121,12 @@ class UserDAO
      */
     public function update(User $user)
     {
-        $query = "UPDATE laravel.Users SET USER_NAME=".$user->getUsername() .
+        $query = "UPDATE laravel.Users SET USER_NAME=".$user->getCredentials()->getUsername() .
         ", FNAME=".$user->getFName() .
         ", LNAME=".$user->getLName() .
         ", EMAIL=".$user->getEmail() .
         ", PHONE=".$user->getPhone() .
-        ", PASSWORD=".$user->getPassword() .
+        ", PASSWORD=".$user->getCredentials()->getPassword() .
         ", STREET=".$user->getStreet() .
         ", STATE=".$user->getState() .
         ", ZIP=".$user->getZip() .
@@ -152,25 +152,16 @@ class UserDAO
         
         $stmt = $this->dbConnect()->prepare($query);
         $stmt->execute([$username]);
-        $user = new User();
+        $user = null;
         $i = 0;
         while($row=$stmt->fetch(PDO::FETCH_ASSOC))
-        {            
+        {      
+            $user = new User($row['FNAME'], $row['LNAME'], $row['EMAIL'], $row['PHONE'], $row['STREET'], $row['STATE'],
+                $row['ZIP'], $row['USER_NAME'], $row['PASSWORD']);
             $user->setUserID($row['USER_ID']);
-            $user->setUsername($row['USER_NAME']);
-            $user->setFName($row['FNAME']);
-            $user->setLName($row['LNAME']);
-            $user->setEmail($row['EMAIL']);
-            $user->setPhone($row['PHONE']);
-            $user->setPassword($row['PASSWORD']);
-            $user->setStreet($row['STREET']);
-            $user->setState($row['STATE']);
-            $user->setZip($row['ZIP']);
+           
             ++$i;
         }
-        
-//         echo '<p>username name from the data service is '.$username.'</p>';
-//         echo '<p>first name from the data service is '.$user->getFName().'</p>';
         
         if($i == 0)
         {            
