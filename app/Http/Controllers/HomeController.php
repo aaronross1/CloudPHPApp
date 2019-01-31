@@ -49,7 +49,16 @@ class HomeController extends Controller
         $zip = $request->input('zip');   
         
         // set all attributes to a new User object
-        $user = new User($fName, $lName, $email, $phone, $street, $state, $zip, $username, $password);
+        $user = new User();
+        $user->setUsername($username);
+        $user->setPassword($password);
+        $user->setFName($fName);
+        $user->setLName($lName);
+        $user->setEmail($email);
+        $user->setPhone($phone);
+        $user->setStreet($street);
+        $user->setState($state);
+        $user->setZip($zip);
         
         // Call the business service to check if username already exists and if not, then add user to database        
         $service = new RegisterService();
@@ -57,7 +66,7 @@ class HomeController extends Controller
         if($nUser == 1)
         {
             // Render the new view with binded data
-            $data = ['username' => $user->getCredentials()->getUsername()];
+            $data = ['username' => $user->getUsername()];
             return view('registerSuccess')->with($data);
         }
         elseif ($nUser == 2)

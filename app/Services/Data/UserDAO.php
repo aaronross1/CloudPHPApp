@@ -19,10 +19,10 @@ class UserDAO
     public function dbConnect()
     {        
         // create variables for the connection information
-        $uername = 'q19batuntyhnwbvk';
-        $password = 'yx6nkcsc96gose04';
-        $host = 'wm63be5w8m7gs25a.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	';
-        $schema = 'lffg46jo4owbitcg';
+        $uername = 'root';
+        $password = 'root';
+        $host = 'localhost';
+        $schema = 'laravel';
         $charset = 'utf8mb4';
         
         $dsn = "mysql:host=$host;dbname=$schema;charset=$charset";
@@ -61,7 +61,7 @@ class UserDAO
         // Test the user info with an echo statement
 //         echo '<p>User first name in the data service is '.$user->getFName().'</p>';
         
-        $query = 'INSERT INTO lffg46jo4owbitcg.users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(:username,
+        $query = 'INSERT INTO laravel.users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(:username,
         :fname,:lname,:email,:phone,:password,:street,:state,:zip)';
         
         try
@@ -69,12 +69,12 @@ class UserDAO
             $stmt=$this->dbConnect()->prepare($query);
             
             $stmt->execute([
-                'username'  => $user->getCredentials()->getUsername(),
+                'username'  => $user->getUsername(),
                 'fname'     => $user->getFName(),
                 'lname'     => $user->getLName(),
                 'email'     => $user->getEmail(),
                 'phone'     => $user->getPhone(),
-                'password'  => $user->getCredentials()->getPassword(),
+                'password'  => $user->getPassword(),
                 'street'    => $user->getStreet(),
                 'state'     => $user->getState(),
                 'zip'       => $user->getZip()]);
@@ -95,7 +95,7 @@ class UserDAO
      */
     public function readAll()
     {
-        $query = "SELECT * FROM lffg46jo4owbitcg.Users";
+        $query = "SELECT * FROM laravel.Users";
         $users = array();
         try 
         {
@@ -121,12 +121,12 @@ class UserDAO
      */
     public function update(User $user)
     {
-        $query = "UPDATE lffg46jo4owbitcg.Users SET USER_NAME=".$user->getCredentials()->getUsername() .
+        $query = "UPDATE laravel.Users SET USER_NAME=".$user->getUsername() .
         ", FNAME=".$user->getFName() .
         ", LNAME=".$user->getLName() .
         ", EMAIL=".$user->getEmail() .
         ", PHONE=".$user->getPhone() .
-        ", PASSWORD=".$user->getCredentials()->getPassword() .
+        ", PASSWORD=".$user->getPassword() .
         ", STREET=".$user->getStreet() .
         ", STATE=".$user->getState() .
         ", ZIP=".$user->getZip() .
@@ -148,20 +148,29 @@ class UserDAO
     
     public function find($username)
     {
-        $query = 'SELECT * FROM lffg46jo4owbitcg.users WHERE USER_NAME=?';
+        $query = 'SELECT * FROM laravel.users WHERE USER_NAME=?';
         
         $stmt = $this->dbConnect()->prepare($query);
         $stmt->execute([$username]);
-        $user = null;
+        $user = new User();
         $i = 0;
         while($row=$stmt->fetch(PDO::FETCH_ASSOC))
-        {      
-            $user = new User($row['FNAME'], $row['LNAME'], $row['EMAIL'], $row['PHONE'], $row['STREET'], $row['STATE'],
-                $row['ZIP'], $row['USER_NAME'], $row['PASSWORD']);
+        {            
             $user->setUserID($row['USER_ID']);
-           
+            $user->setUsername($row['USER_NAME']);
+            $user->setFName($row['FNAME']);
+            $user->setLName($row['LNAME']);
+            $user->setEmail($row['EMAIL']);
+            $user->setPhone($row['PHONE']);
+            $user->setPassword($row['PASSWORD']);
+            $user->setStreet($row['STREET']);
+            $user->setState($row['STATE']);
+            $user->setZip($row['ZIP']);
             ++$i;
         }
+        
+//         echo '<p>username name from the data service is '.$username.'</p>';
+//         echo '<p>first name from the data service is '.$user->getFName().'</p>';
         
         if($i == 0)
         {            

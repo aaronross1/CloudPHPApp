@@ -11,18 +11,21 @@ class User
     private $street;
     private $state;
     private $zip;
-    private $credentials;
+    private $username;
+    private $password;
     
-    public function __construct($fName, $lName, $email, $phone, $street, $state, $zip, $username, $password)
+    public function __construct()
     {
-        $this->fName = $fName;
-        $this->lName = $lName;
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->street = $street;
-        $this->state = $state;
-        $this->zip = $zip;
-        $this->credentials = new Credentials($username, $password);
+        $this->userID = null;
+        $this->fName = null;
+        $this->lName = null;
+        $this->email = null;
+        $this->phone = null;
+        $this->street = null;
+        $this->state = null;
+        $this->zip = null;
+        $this->username = null;
+        $this->password = null;        
     }
     
     //getters and setters functions
@@ -64,11 +67,6 @@ class User
     public function getZip()
     {
         return $this->zip;
-    }
-    
-    public function getCredentials()
-    {
-        return $this->credentials;
     }
     
     public function getUsername()
