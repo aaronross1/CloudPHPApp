@@ -19,10 +19,10 @@ class UserDAO
     public function dbConnect()
     {        
         // create variables for the connection information
-        $uername = 'root';
-        $password = 'root';
-        $host = 'localhost';
-        $schema = 'laravel';
+        $uername = 'q19batuntyhnwbvk';
+        $password = 'yx6nkcsc96gose04';
+        $host = 'wm63be5w8m7gs25a.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+        $schema = 'lffg46jo4owbitcg';
         $charset = 'utf8mb4';
         
         $dsn = "mysql:host=$host;dbname=$schema;charset=$charset";
@@ -61,7 +61,7 @@ class UserDAO
         // Test the user info with an echo statement
 //         echo '<p>User first name in the data service is '.$user->getFName().'</p>';
         
-        $query = 'INSERT INTO laravel.users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(:username,
+        $query = 'INSERT INTO lffg46jo4owbitcg.users(USER_NAME,FNAME,LNAME,EMAIL,PHONE,PASSWORD,STREET,STATE,ZIP) VALUES(:username,
         :fname,:lname,:email,:phone,:password,:street,:state,:zip)';
         
         try
@@ -95,7 +95,7 @@ class UserDAO
      */
     public function readAll()
     {
-        $query = "SELECT * FROM laravel.Users";
+        $query = "SELECT * FROM lffg46jo4owbitcg.Users";
         $users = array();
         try 
         {
@@ -121,7 +121,7 @@ class UserDAO
      */
     public function update(User $user)
     {
-        $query = "UPDATE laravel.Users SET USER_NAME=".$user->getUsername() .
+        $query = "UPDATE lffg46jo4owbitcg.Users SET USER_NAME=".$user->getUsername() .
         ", FNAME=".$user->getFName() .
         ", LNAME=".$user->getLName() .
         ", EMAIL=".$user->getEmail() .
@@ -148,7 +148,7 @@ class UserDAO
     
     public function find($username)
     {
-        $query = 'SELECT * FROM laravel.users WHERE USER_NAME=?';
+        $query = 'SELECT * FROM lffg46jo4owbitcg.users WHERE USER_NAME=?';
         
         $stmt = $this->dbConnect()->prepare($query);
         $stmt->execute([$username]);
